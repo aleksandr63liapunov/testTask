@@ -3,6 +3,7 @@ package com.example.demo.service;
 
 import com.example.demo.model.Sale;
 import com.example.demo.userRepo.SaleRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,20 +20,26 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public Sale getSaleById(long id) {
         Optional<Sale> saleTerminal = saleRepository.findById(id);
-        //если существует найденная сущность с таким id
         if (saleTerminal.isPresent()) {
             return saleTerminal.get();
         }
-        //если не существует найденная сущность с таким id
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<List<Sale>> getAll() {
+        Optional<List<Sale>> saleTerminal = Optional.of(saleRepository.findAll());
+        if (saleTerminal.isPresent()) {
+            return ResponseEntity.ok(saleTerminal.get());
+        }
         return null;
     }
 
 
-    @Override
-    public List<Sale> getAll() {
-
-        return (List<Sale>) saleRepository.findAll();
-    }
+//    @Override
+//    public ResponseEntity<List<Sale>> getAll() {
+//        return ResponseEntity.ok( saleRepository.findAll());
+//    }
 
     @Override
     public Sale save(Sale sale) {
@@ -42,32 +49,39 @@ public class SaleServiceImpl implements SaleService {
     @Override
     public Sale updateSale(Sale sale) {
 
-            Sale saleNew=new Sale();
-            saleNew.setId(sale.getId());
-            saleNew.setName(sale.getName());
-            saleNew.setLastName(sale.getLastName());
-            saleNew.setAge(sale.getAge());
-            saleNew.setPurchase_item(sale.getPurchase_item());
-            saleNew.setCount(sale.getCount());
-            saleNew.setAmount(sale.getAmount());
-            saleNew.setPurchase_date(sale.getPurchase_date());
+        Sale saleNew = new Sale();
+        saleNew.setId(sale.getId());
+        saleNew.setName(sale.getName());
+        saleNew.setLastName(sale.getLastName());
+        saleNew.setAge(sale.getAge());
+        saleNew.setPurchase_item(sale.getPurchase_item());
+        saleNew.setCount(sale.getCount());
+        saleNew.setAmount(sale.getAmount());
+        saleNew.setPurchase_date(sale.getPurchase_date());
 
         return saleNew;
     }
 
     @Override
-    public Sale deleteSaleById(Long id) {
-        Optional<Sale> saleTerminal = saleRepository.findById(id);
+    public void deleteSaleById(Long id) {
+        Optional saleTerminal = saleRepository.findById(id);
         if (saleTerminal.isPresent()) {
             saleRepository.deleteById(id);
-            return null;
+
         }
-        return null;
+
     }
 
     @Override
     public void deleteAll() {
+       Optional<List<Sale>> saleTerminal = Optional.of(saleRepository.findAll());
+       if(saleTerminal.isPresent()){
         saleRepository.deleteAll();
+       }
+       else {
+           System.out.println("таблица пуста");
+       }
+
     }
 
 
@@ -79,17 +93,17 @@ public class SaleServiceImpl implements SaleService {
 
 
     @Override
-    public List<Sale> getSaleListMostPopularLastMonth() {
+    public List<String> getSaleListMostPopularLastMonth() {
         return saleRepository.findSaleLastMonth();
     }
 
     @Override
-    public List<Sale> getSaleListMostBuyingLastHalfAYear() {
-        return null;
+    public List<String> getSaleListMostBuyingLastHalfAYear() {
+        return saleRepository.findSaleHalfAYear();
     }
 
     @Override
-    public List<Sale> getSaleListMostBuyingBy18YearOld() {
-        return null;
+    public List<String> getSaleListMostBuyingBy18YearOld() {
+        return saleRepository.findSaleBy18YearOld();
     }
 }

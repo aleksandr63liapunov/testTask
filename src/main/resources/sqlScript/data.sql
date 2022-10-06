@@ -1,20 +1,3 @@
-create type purchase_item as enum ('TV', 'SMARTPHONE', 'JUICER', 'HEADPHONES', 'KEYBOARD');
-
-
-
-CREATE TABLE Sale (
-                      id  serial  primary key ,
-                      name VARCHAR(30) NOT NULL,
-                      last_name VARCHAR(30) NOT NULL,
-                      age SMALLINT NOT NULL,
-                      purchase_item purchase_item ,
-                      count INT NOT NULL,
-                      amount FLOAT NOT NULL,
-                      purchase_date timestamp without time zone NOT NULL
-
-);
-------------------------------------------------------------------------------
-
 insert into Sale (id, name, last_name, age, purchase_item, count, amount,purchase_date)
 values (1,'Alex', 'Liapunov', 18, 'TV', 1, 1000,'2018-05-10'),
        (2, 'Oleg', 'Ivanov', 36, 'SMARTPHONE', 3, 3000,'2018-05-10'),
@@ -23,9 +6,7 @@ values (1,'Alex', 'Liapunov', 18, 'TV', 1, 1000,'2018-05-10'),
        (5,'Dasha', 'Petrova', 28, 'SMARTPHONE', 1, 1000,'2018-05-10'),
        (6,'Vika', 'Utkina', 18, 'TV', 5, 5000,'2018-05-10');
 
-
-
------------------список покупок за неделю ---------------------------------------------------------
+---------------список покупок за неделю ---------------------------------------------------------
 SELECT purchase_item FROM Sale
 WHERE purchase_date  >=date(now()-interval '1 week') ;
 

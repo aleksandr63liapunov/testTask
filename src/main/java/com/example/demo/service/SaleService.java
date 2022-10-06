@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 
 import com.example.demo.model.Sale;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,13 +13,13 @@ public interface SaleService {
 
     Sale getSaleById(long id);
 
-    List<Sale> getAll();
+    ResponseEntity<List<Sale>> getAll();
 
     Sale save(Sale sale);
 
     Sale updateSale(Sale sale);
 
-    Sale deleteSaleById(Long id);
+    void deleteSaleById(Long id);
 
     void deleteAll();
 
@@ -26,9 +27,9 @@ public interface SaleService {
 
     List<Sale> getSaleListLastWeek();
 
-    List<Sale> getSaleListMostPopularLastMonth();
+    List<String> getSaleListMostPopularLastMonth();
 
-    List<Sale> getSaleListMostBuyingLastHalfAYear();
+    List<String> getSaleListMostBuyingLastHalfAYear();
 
-    List<Sale> getSaleListMostBuyingBy18YearOld();
+    List<String> getSaleListMostBuyingBy18YearOld();
 }
