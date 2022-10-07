@@ -3,12 +3,13 @@ package com.example.demo.controler;
 
 import com.example.demo.model.Sale;
 import com.example.demo.service.SaleService;
-
+//import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ import java.util.Map;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/api")
+//@RequestMapping("/api")
 
 public class SaleController {
     private final SaleService saleService;
@@ -59,6 +60,7 @@ public class SaleController {
             @ApiResponse(responseCode = "404", description = "No any found sales", content = @Content)})
 
     @GetMapping("/sales")
+
     public ResponseEntity<List<Sale>> findAllController() {
         return saleService.getAll();
     }
